@@ -127,4 +127,4 @@ description: 'Basic Concepts of ReactJS.'
   * `componentWillUnmount` gets called, and this is where we might need to cleanup and minimize the risk of memory leaks.
 
   * The below diagram's link is at the start of this section
-  ![lifecycles](../imgages/lifecycles.png)
+  ![lifecycles](../images/lifecycles.png)
