@@ -2,6 +2,7 @@
 title: 'React Server Side Rendering Concepts'
 date: '2021-01-01'
 description: 'Basic Concepts of ReactJS SSR custom Setup.'
+featuredImage: feat-ssr.png
 ---
 
 ## Overview: 
