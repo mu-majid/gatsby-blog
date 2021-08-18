@@ -2,7 +2,7 @@
 title: 'React Server Side Rendering Concepts'
 date: '2021-01-01'
 description: 'Basic Concepts of ReactJS SSR custom Setup.'
-featuredImage: feat-ssr.png
+featuredImage: ../images/feat-ssr.png
 ---
 
 ## Overview: 
@@ -26,12 +26,12 @@ featuredImage: feat-ssr.png
     1. The browser makes a request to the server (hosting the app), and an html document is returned by the server
     2. The html document has a script tag with `src` to the entire react app as a bundle (bundle.js).
 
-  ![traditionl](./images/typical-react.png)
+  ![traditionl](../images/typical-react.png)
 
   - Traditional React apps take a slightly long time to get content visible on the screen, which is a behavior we want to avoid.
   - With SSR, whne the browser reach out to server, it will get an html document that has much more content compared to the traditional react app. So, having a full document really get content to screen pretty fast. (We are still using react on the client).
 
-  ![ssr](./images/ssr-react.png)
+  ![ssr](../images/ssr-react.png)
 
 ## App Overview:
 
@@ -41,7 +41,7 @@ featuredImage: feat-ssr.png
   - Another benefit is that we could scale out each server separately.
   - **IMPORTANT NOTE**: SSR performance is not fast and needs optimization (like having fast machines for the rendering servers). check out this [Walmart labs blog post](https://medium.com/walmartglobaltech/using-electrode-to-improve-react-server-side-render-performance-by-up-to-70-e43f9494eb8b) 
 
-  ![sepservers](./images/sep-servers.png)
+  ![sepservers](../images/sep-servers.png)
 
 ## Notes: 
 
@@ -58,7 +58,7 @@ featuredImage: feat-ssr.png
   - These are the two bundles we create right now.
   - `indexjs` serves as the root (bootup) for the react app on the server, and `clientjs` serves as the root (bootup) for the react app on the browser.
 
-  ![bundles](./images/two-bundles.png)
+  ![bundles](../images/two-bundles.png)
 
   - `indexjs` on the server depends on the `Home.js` component, and also  the `clientjs` file depends on `Home.js` component, **but** we need the segregation between them for many reasons, the first one being server code might have sensitive data that cannot be sent to the client
 
@@ -69,19 +69,19 @@ featuredImage: feat-ssr.png
   Code Execution Order on the browser with SSR:
   -----
 
-  ![execorder](./images/exec-order.png)
+  ![execorder](../images/exec-order.png)
 
 ## Routing Inside SSR Application:
 
   - We have two tiers of routing inside our app like shown in th picture below
   
-  ![routing](./images/routing.png)
+  ![routing](../images/routing.png)
 
   - express route handler will delegate  requests to react router instead of handling it. So react router has the final saying in what gets shown on the screen. (both on server -delegating reqs to it by express handler- and on client when hydration occur).
 
   ## How React Router Work ? (BrowserRouter)
 
-  ![browser-router](./images/browser-router.png)
+  ![browser-router](../images/browser-router.png)
 
   - So browser router looks at address bar in the browser, This is hardcoded in it, So we can't use it inside our sevrer.
 
@@ -89,7 +89,7 @@ featuredImage: feat-ssr.png
 
   - the setup will look like this:
 
-  ![static-router](./images/static-router.png)
+  ![static-router](../images/static-router.png)
 
   - `Routes.js`: Will include all route mappings.
   - Import this `Routes.js` file into:
@@ -103,7 +103,7 @@ featuredImage: feat-ssr.png
 
   - We have four big challenges with regard to Redux with SSR.
 
-  ![4-challenges](./images/4-challenges.png)
+  ![4-challenges](../images/4-challenges.png)
 
   1. Challenge 1: the first one is a result of the other three challenges and should be solved by having two stores one on the server and the other on the client.
   2. Challenge 2: We need to know who is authenticated, and we are using cookie based auth, and this data is hard to obtain on the server.
@@ -117,17 +117,17 @@ featuredImage: feat-ssr.png
 
   - right now on the browser this is the flow (normal react flow)
 
-  ![action-browser](./images/action-creator-browser.png)
+  ![action-browser](../images/action-creator-browser.png)
 
   - but on the server, we respond immediately after rendering app without waiting for the reducer to run and re-render the app, So the `componentDidMount` lifecycle method does not get called on the server.
 
-  ![action-server](./images/action-creator-server.png)
+  ![action-server](../images/action-creator-server.png)
 
   #### Solution one:
 
   - try to render the app two times:
 
-  ![sol-one](./images/sol-one.png)
+  ![sol-one](../images/sol-one.png)
 
   - This solution has a **pro** of not having to write a lot code (however we need to know when action creator finishes)
   - But, there are some **cons**: 
@@ -138,7 +138,7 @@ featuredImage: feat-ssr.png
 
   #### Solution two: (Data Loading solution taken by most of frameworks)
 
-  ![sol-two](./images/sol-two.png)
+  ![sol-two](../images/sol-two.png)
 
   - This solution has a **con** that we need to write more code.
   - But the **Pros** are:
@@ -151,17 +151,17 @@ featuredImage: feat-ssr.png
 
   - We will define a `loadData` function on each component that preloads any data that a component needs before being rendered
 
-  ![loaddata](./images/load-data.png)
+  ![loaddata](../images/load-data.png)
 
   ### Client State rehydration:
 
   - there is an issue that rises from the fact that we create and populate a store on the server, but when bundle is sent to client the browser creates another empty redux store, causing an error to be logged in the browser console (becuase empty store clears page temporarily).
 
-  ![clientrehydration](./images/client-state-rehyration.png)
+  ![clientrehydration](../images/client-state-rehyration.png)
 
   - the solution simply is to dump server store state into the HTML template and when bundle is shipped to the browser it will use the dumped data inside the HTML to init the browser store with it.
 
-  ![clientrehydration2](./images/client-state-rehydration2.png)
+  ![clientrehydration2](../images/client-state-rehydration2.png)
 
   -**NOTE**: React render function by default serialize and sanitize user input, but in case of SSR we are sending content as string without sanitizing anything (Use serialize-javascript instead of json.stringfy)
 
@@ -174,22 +174,22 @@ featuredImage: feat-ssr.png
 
   - Our API uses **cookies** after going through OAuth flow, but the issue with cookies is that cookies are associated with full domain, so requests to sub domains will not include the cookie. So our Render Server will not be able to make requests to API server on behalf of the browser.
 
-  ![cookieauth](./images/auth-issue.png)
+  ![cookieauth](../images/auth-issue.png)
 
   - one solution to setup a proxy on the render server itself, and when a user wants to authenticate with the API server , they will go through that proxy first.
 
-  ![proxy](./images/auth-proxy.png)
+  ![proxy](../images/auth-proxy.png)
 
   - **Note** that the initial page loading does not require the proxy (render server will make the request on behalf of the browser.)
 
   - **Note** Reaching out to API is done via `Action Creators` and we have to make sure that the exact same action creators are used both the server (no proxy) and on the client (through proxy) - This is what Isomorphic javascript is all about.
 
 
-  ![proxy-note](./images/auth-proxy-flow.png)
+  ![proxy-note](../images/auth-proxy-flow.png)
 
   #### Authentication Flow itself ?
   
-  ![auth](./images/auth.png)
+  ![auth](../images/auth.png)
 
   ### Why Not JWTs ? 
 
@@ -206,11 +206,11 @@ featuredImage: feat-ssr.png
 
   * step two diagram: 
 
-  ![steptwo](./images/auth-step-two.png)
+  ![steptwo](../images/auth-step-two.png)
 
   * step three diagram:
 
-  ![stepthree](./images/auth-step-three.png)
+  ![stepthree](../images/auth-step-three.png)
 
   **How Would be able to achieve these steps without writing code like this inside action creator**
 
@@ -225,14 +225,14 @@ featuredImage: feat-ssr.png
   ```
   * This could be achieved using some features from `axios` and `redux-thunk` libraries. Namely, create custom axios instance, and extraArgument to the thunk object.
 
-  ![solution](./images/custom-axios.png)
+  ![solution](../images/custom-axios.png)
 
 
 ## Error handling in SSR: 
 
   - Figuring out when we need to send an error code back to the client we need to use the `context` property on the `StaticRouter`, (*This context is just a property, not to be confused with the react Context system*).(*context property does not exist on the browser router*)
 
-  ![staticcontext](./images/static-router-context.png)
+  ![staticcontext](../images/static-router-context.png)
 
   - The static router as shown above passes the context to every page getting rendered as a prop, after static router finish rendering we can check the context object if it has an error object (err obj assigned by for example NotFoundPage component)
 
@@ -286,7 +286,7 @@ featuredImage: feat-ssr.png
 
   * the below diagram shows that we have separated data fetcing process from error handling process. And very **importantly** if an error occurs during data fetching, we are still rendering the application and only then we handle errors.
 
-  ![errorhandle](./images/error-handling.png)
+  ![errorhandle](../images/error-handling.png)
 
   **But Why ???** => Remember error handling should also be done on the client, in case a user visit a public initial page then tries to visit a protected page the react app on the browser should be the one handling errors.
 
@@ -320,10 +320,10 @@ featuredImage: feat-ssr.png
   * Why not use it? Ans.- Some features we use right now would not be available, like redirecting, There are some work arounds for it, but why go with a workaround :D
 
   - **renderToString()** :
-  ![string](./images/string.png)
+  ![string](../images/string.png)
 
   - **renderToNodeStream()** :
-  ![stream](./images/stream.png)
+  ![stream](../images/stream.png)
 
   #### Remember:
 
