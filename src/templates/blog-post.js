@@ -4,6 +4,8 @@ import Layout from "../components/layout"
 
 export default ({ data }) => {
   const post = data.markdownRemark
+  const srcArr = post.frontmatter.featuredImage.childImageSharp.fluid.src.split('/')
+  console.log(`/images/${srcArr[srcArr.length - 1]}`)
   return (
     <Layout>
       <div>
@@ -20,6 +22,13 @@ export const query = graphql`
       html
       frontmatter {
         title
+        featuredImage {
+          childImageSharp {
+            fluid {
+              src
+            }
+          }
+        }
       }
     }
   }

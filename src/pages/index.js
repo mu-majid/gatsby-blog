@@ -56,6 +56,13 @@ export const query = graphql`
             title
             date(formatString: "DD MMMM, YYYY")
             description
+            featuredImage {
+              childImageSharp {
+                fluid {
+                  src
+                }
+              }
+            }
           }
           fields {
             slug
