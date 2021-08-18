@@ -6,6 +6,8 @@ description: 'Basic Concepts of ReactJS SSR custom Setup.'
 
 ## Overview: 
 
+  - Link To Repository -> [Star If you liked it 😊](https://github.com/mu-majid/SSR-React-Redux)
+
   - This repo provides some information about SSR, why we use it, and challenges of SSR.
   - I will use React, with redux and React Router, Also, topics like authentication will be discussed.
   - Check These Links:
