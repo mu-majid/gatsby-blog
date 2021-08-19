@@ -151,7 +151,7 @@ description: 'Notes about Docker internals and kubernetes tips and how to use it
 
   * Ingress services internally uses `load-balancer` service type.
 
-  * Some features likes sticky sessions, would be challenging if we chose to use a normal load balancer with a normal nginx deployment instead of a an ingress deployment.
+  * Some features like sticky sessions, would be challenging if we chose to use a normal load balancer with a normal nginx deployment instead of a an ingress deployment.
 
   * More on [Ingress-nginx](https://www.joyfulbikeshedding.com/blog/2018-03-26-studying-the-kubernetes-ingress-system.html)
 
