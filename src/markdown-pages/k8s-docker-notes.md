@@ -1,6 +1,12 @@
- Overview: 
+---
+title: 'Docker And Kubernetes Notes'
+date: '2021-03-01'
+description: 'Notes about Docker internals and kubernetes tips and how to use it.'
+---
+# Overview: 
 
-  * Complete guide to Docker and kubernestes, with CI+CD Workflows,  AWS Deployment, and  Kubernetes in Production.
+  * Complete guide to Docker and kubernetes, with CI+CD Workflows,  AWS Deployment, and  Kubernetes in Production.
+  - Link To Repository -> [Star If you liked it 😊](https://github.com/mu-majid/docker-k8s-lab)
 
 ## Brief Introduction:
 
