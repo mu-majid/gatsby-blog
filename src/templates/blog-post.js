@@ -4,8 +4,8 @@ import Layout from "../components/layout"
 
 export default ({ data }) => {
   const post = data.markdownRemark
-  const srcArr = post.frontmatter.featuredImage.childImageSharp.fluid.src.split('/')
-  console.log(`/images/${srcArr[srcArr.length - 1]}`)
+  // const srcArr = post.frontmatter.featuredImage.childImageSharp.fluid.src.split('/')
+  // console.log(`/images/${srcArr[srcArr.length - 1]}`)
   return (
     <Layout>
       <div>
