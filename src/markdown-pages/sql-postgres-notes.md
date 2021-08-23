@@ -1,3 +1,9 @@
+---
+title: 'Guide to SQL and Postgres'
+date: '2021-02-01'
+description: 'Covering some basics and advanced topics related to Postgres.'
+---
+
 ## Overview
 
   * CMU database course by andy pavlo is a good resource for how the DB engine works internally.
