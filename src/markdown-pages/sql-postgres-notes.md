@@ -52,17 +52,17 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
 
   **Different types of joins**
 
-  ![joins](./pics/venn-sql-joins.jpg)
+  ![joins](../images/venn-sql-joins.jpg)
 
   - **Full Join Type:**
 
     - Merge tables together, and keep any rows that does not match both tables
 
-  ![full-join](./pics/full-join.png)
+  ![full-join](../images/full-join.png)
 
   - **Inner Join Type**:
 
-  ![inner](./pics/inner.png)
+  ![inner](../images/inner.png)
 
     - merge tables together and drop any records tha don't match in both tables.
     - Like an intersection with sets.
@@ -71,13 +71,13 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
 
     - Merge tables together, and keep any rows that does not match only in the **source** table.
 
-  ![left-outer](./pics/left-outer.png)
+  ![left-outer](../images/left-outer.png)
 
   - **Right Outer Join Type:**
     
     - Merge tables together, and keep any rows that does not match only in the **join** table.
 
-  ![right-outer](./pics/right-outer.png)
+  ![right-outer](../images/right-outer.png)
 
 
 ### SQL Aggregations
@@ -121,7 +121,7 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
     - UUID
 
   **Numbers**:
-  ![numbers](./pics/numbers.png)
+  ![numbers](../images/numbers.png)
 
   - for `id` we usually use `serial`.
   - for numbers without decimal point we use `integer`
@@ -133,14 +133,14 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
 
 
   **Characters**:
-  ![chars](./pics/chars.png)
+  ![chars](../images/chars.png)
 
   - There is no difference in terms of performance between these types
   - `char` will truncate string or pad a small string with spaces to be of the exact length specified.
 
 
   **Boolean**:
-  ![bool](./pics/bool.png)
+  ![bool](../images/bool.png)
 
   - Postgres added the `yes` `y` `1` ... as backward compatible solution for older databases
 
@@ -170,7 +170,7 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
   **Where to validate**?
 
   - Most of validation rules are best put on the server, and only the critical ones are on the database side
-  ![validation](./pics/validation.png)
+  ![validation](../images/validation.png)
 
 ### Building A Like System:
 
@@ -182,8 +182,8 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
 
   1. design a table called `like` and that holds `user_id` and `post_id` references, also to ensure that a user can only like a post one time, we can apply a UNIQUE constraint on both (user_id, post_id)
 
-  ![like](./pics/like.png)
-  ![like-cap](./pics/like-cap.png)
+  ![like](../images/like.png)
+  ![like-cap](../images/like-cap.png)
 
   2. the downside of this approach is that we only can have a single type of reaction, So we can't have a system like facebook.
   3. Also creating a likes table as mentioned we cannot like a comment for instance.
@@ -193,22 +193,22 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
 
   - we can rename the table to `reactions` instead, and add a column called `type` which is an ENUM that hold the type of the reaction.
 
-  ![reactions](./pics/reactions.png)
+  ![reactions](../images/reactions.png)
 
   #### To Allow liking multiple resources
 
   - First solution is the `polymorphic association`. Of course not using FK constraint is a huge disadvantage. 
 
-  ![poly](./pics/poly.png)
+  ![poly](../images/poly.png)
 
   - Another approach is to have a column (as FK) for each resource to be liked. The issue here is that `likes` table might get too long if we have many resources to like in our system
 
-  ![sol1](./pics/sol1.png)
+  ![sol1](../images/sol1.png)
 
   - The last and simplest solution is to create a table for each resources to be liked, of course a downside is we could end up with many tables.
   - an advantage of this approach is we can have different validation rules per resource.
 
-  ![sol2](./pics/sol2.png)
+  ![sol2](../images/sol2.png)
 
 ### Building A Mention System:
 
@@ -226,17 +226,17 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
   * Generally, there are two solutions for the tagging system, shown in the below 2 diagrams.
   * Solution 1 :
 
-  ![tag1](./pics/tag1.png)
+  ![tag1](../images/tag1.png)
 
   * Solution 2 :
   
-  ![tag2](./pics/tag2.png)
+  ![tag2](../images/tag2.png)
 
   * Choosing a solution really depends on some questions like the two mentioned in the below diagram, we have to  consider performance, how frequent we query our resources, data access patterns, and whether a functionality might change in the future and how will it be changed.
 
   * We might allow reacting to photo_tags and not caption_tags, that case shows we might need to separate the two types of tags into two separate tables.
 
-  ![question](./pics/question.png)
+  ![question](../images/question.png)
 
 ### Building A Hashtag System:
 
@@ -248,18 +248,18 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
 
   * One solution to build a posts_hashtags relation is to use a table like the one shown in the below diagram.
 
-  ![sol-bad-perf](./pics/sol-bad-perf.png)
+  ![sol-bad-perf](../images/sol-bad-perf.png)
 
   * But for performance concerns, it is not wise to store many repetitive strings, and a better solution is to have some kind of a table that serves as a set of hashtags inside our application. Like shown below.
 
-  ![better-sol](./pics/better-sol.png)
+  ![better-sol](../images/better-sol.png)
 
 ### Designing Follower System:
 
   * We will implement a pretty simple follower system, a leader is the person being followed, and a follower is the person clicking the follow button.
   * a simple design might look like this:
 
-  ![follow1](./pics/follow1.png)
+  ![follow1](../images/follow1.png)
 
 ### Performance and Internals of Postgres:
 
@@ -276,7 +276,7 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
   * A page or a block has a fixed size of 8 KB (in case of postgres).
   * Illustration of a block:
 
-  ![block1](./pics/block1.png)
+  ![block1](../images/block1.png)
 
 ### Indexes:
 
@@ -342,14 +342,14 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
     WHERE users.username = 'Alyson14';
   ```
 
-  ![analyze](./pics/analyze.png)
+  ![analyze](../images/analyze.png)
 
   * The first and all boxes with `->` at the beginning mean it's a query node where we do actual processing.
   * We read the above result from inside out, so the first step is `Index Scan` then the result is passed up to `Hash` and alongside the `Hash` there is also `Seq Scan` of the comments table and its result is passed to the First node `Hash Join` and combine the two results into one result.
 
   * Further investigation on the numbers and fields with each node:
 
-  ![analyze2](./pics/analyze2.png)
+  ![analyze2](../images/analyze2.png)
 
   * For calculating the `Cost` field, we will consider a more simple query as an example:
 
@@ -362,15 +362,15 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
 
   * The planner will probably have two solutions to find that user, namely these two:
 
-  ![idx-vs-seqscan](./pics/idx-vs-seqscan.png)
+  ![idx-vs-seqscan](../images/idx-vs-seqscan.png)
 
   * We need some score to determine which method has better performance, so we could say that the number of pages loaded is a good metric here, so have this comparison now:
 
-  ![idx-vs-seqscan-score](./pics/idx-vs-seqscan-score.png)
+  ![idx-vs-seqscan-score](../images/idx-vs-seqscan-score.png)
 
   * But beware that reading sequential pages from disk is much more convenient than reading random pages at random locations.
 
-  ![idx-vs-seqscan-score2](./pics/idx-vs-seqscan-score2.png)
+  ![idx-vs-seqscan-score2](../images/idx-vs-seqscan-score2.png)
 
   * So if we assigned a penalty factor of `4` (completely random number here!!!) for every random page read
     we would end up with (2 random reads * 4 penalty factor = 8) vs (110 users table pages * 1 base factor seq read = 110)
@@ -378,7 +378,7 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
 
   * To calculate the cost (predicted cost with a score)  for an operation in postgres, the planner uses this equation:
 
-  ![cost-calc](./pics/cost-calc.png)
+  ![cost-calc](../images/cost-calc.png)
 
   * A very important example that shows that a sequential scan could be more convenient than an index, is when we are fetching the majority of records out of a table using a WHERE clause on an indexed column, e.g, Find all likes created at dates greater than 2013-10-10, in our instagram database, would result in 80% of the likes, so using an index would mean having a lot of random pages accessed, and that means a larger cost if index used compared to sequential scan.
 
@@ -386,11 +386,11 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
 
   * It is a technique that makes queries more easy to read.
 
-  ![cte](./pics/cte.png)
+  ![cte](../images/cte.png)
 
   * to solve the above problem with CTE, we would use a query like shown below:
 
-  ![cte-note](./pics/cte-note.png)
+  ![cte-note](../images/cte-note.png)
 
   * Another usage of CTEs is recursive CTE which is very handy tool used for complex queries.
 
@@ -413,31 +413,31 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
 
   * Behind the scenes, RCTE creates two tables, namely, the Results and Working tables. And the columns of these tables are whatever we wrote in the parentheses of the RCTE, in our case one column called `val`. below is a picture of the steps used to calculate RCTE.
 
-  ![rcte1](./pics/rcte1.png)
+  ![rcte1](../images/rcte1.png)
 
   **RCTE Example using instagram DB**:
 
   * here is a screenshot from instagram, that suggests people to me to follow.
 
-  ![screenshot-follow](./pics/screenshot-follow.png)
+  ![screenshot-follow](../images/screenshot-follow.png)
 
   * Instagram makes the following assumption: Since I am following X person, then I might be interested in following whoever that X is following, something like this:
 
-  ![who-should-follow](./pics/who-should-follow.png)
+  ![who-should-follow](../images/who-should-follow.png)
 
   * But what if I continue scrolling down the ap and I am not interested in any of the suggestion, than instagram would go one extra level in the followers **Graph**, like this:
 
-  ![extra-level](./pics/extra-level.png)
+  ![extra-level](../images/extra-level.png)
 
   **The Query to Build such a tree**:
 
   * We are trying to make suggestion to Hallie (userId = 1) on who to follow.
 
-  ![hallie1](./pics/hallie1.png)
+  ![hallie1](../images/hallie1.png)
 
   * We can see that hallie is following `the rock` and `kevin hart`, and these two users are following `justin beiber`, `jennifer lopez`, and `Snoop Dog`.
 
-  ![hallie2](./pics/hallie2.png)
+  ![hallie2](../images/hallie2.png)
 
   * to get this result, we could write a query like this:
 
@@ -494,13 +494,13 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
   * This could be an indication that we made a bad database design. And to fix this we have two possible solutions:
     1. Merge two tables into one table, and delete the original tables
 
-  ![sol1-bad-design](./pics/sol1-bad-design.png)
+  ![sol1-bad-design](../images/sol1-bad-design.png)
 
     - This has some serious drawbacks, we can't copy over the ID's of photo_tags and caption_tags since they must be unique, and if we delete original tables we break any existing queries that refer to them.
 
     2. Creating A view
 
-  ![sol2-bad-design](./pics/sol2-bad-design.png)
+  ![sol2-bad-design](../images/sol2-bad-design.png)
 
   ``` sql
     CREATE VIEW tags AS (
@@ -511,7 +511,7 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
   ```
 
   * But when to use a view, here is a list of some scenarios where we might need to create a view:
-  ![when-to-use-view](./pics/when-to-use-view.png)
+  ![when-to-use-view](../images/when-to-use-view.png)
 
   ```sql
   -- Most Recent 10 Posts
@@ -540,7 +540,7 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
 
   - Solution 1: Three-way Left Join:
 
-  ![left-join-comment-post-likes](./pics/left-join-comment-post-likes.png)
+  ![left-join-comment-post-likes](../images/left-join-comment-post-likes.png)
 
   ```sql
   SELECT 
@@ -573,18 +573,18 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
   * We start a transaction by writing `BEGIN;`.
   * When a connection calls the DB server with the BEGIN keyword, it (connection) enters a different/isolated state. And you can imagine as if DB created a copy of the data to work with, (NOTE NO DATA WERE ACTUALLY COPIED)
 
-  ![conn-begin](./pics/conn-begin.png)
+  ![conn-begin](../images/conn-begin.png)
 
   * When connection1 begins to make changes, these changes are made only to the workspace data, and these changes are not reflected to main data, and other connection will return these data not changed.
 
   * To make these changes made by connection1 effective, we could issue `COMMIT` command.
   
-  ![commit-changes](./pics/commit-changes.png)
+  ![commit-changes](../images/commit-changes.png)
 
   * and if we want to discard them, we could run `ROLLBACK` command (In case of error, we enter an aborted state and we must **manually** run ROLLBACK command).
 
   
-  ![abort-trans](./pics/abort-trans.png)
+  ![abort-trans](../images/abort-trans.png)
 
 
   * If a crash occurs, and connection is closed, DB calls rollback automatically for us.
@@ -604,7 +604,7 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
   * Running Data migration along with schema migration could result in an erroneous results, because while we are running our data migration in a transaction, the table could be receiving inserts in the mean time, causing erroneous results.
 
   * Here is an idea on how we should implement data+schema migration.
-  ![data+schema-migration](./pics/data+schema-migration.png)
+  ![data+schema-migration](../images/data+schema-migration.png)
 
   * When we update a row inside a transaction, this row gets locked, so for a long running transaction, this row would not be updated by any other transactions until the locking transaction finishes.
 
@@ -643,7 +643,7 @@ UNION, INTERSECT, EXCEPT: This is a no-brainer. A UNION is an operator that conn
   - Solution #1: Each File has its own database. No conflicts, **but** many databases will be created if we have many files.
   - Solution #2: Each File gets its isolation by giving each file a *Schema*.
 
-  ![pg-schema](./pics/pg-schema.png)
+  ![pg-schema](../images/pg-schema.png)
 
   - Postgres will use `public` schema if we did not specify what schema we should read from it. This default schema is determined by `search_path` variable value. The default value is actually what is stored in `$user` variable, which is the user connected. This means if we have a schema name equal to connected user name, this schema will be used. All this discussion is of course inside on Database.
 
